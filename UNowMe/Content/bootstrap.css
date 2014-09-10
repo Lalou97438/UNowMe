@@ -6806,6 +6806,18 @@ td.visible-print {
     padding: 5px;
     border: 1px solid #999;
 }
+#formFromPoint{
+    display: none;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: #CCA;
+    z-index:10;
+    opacity:0.5;
+    filter: alpha(opacity=50);
+}
 
 @media print {
   .visible-print {

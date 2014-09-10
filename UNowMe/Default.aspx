@@ -16,7 +16,8 @@
             // This event listener will call addMarker() when the map is clicked.
             google.maps.event.addListener(map, 'click', function (event) {
                 addMarker(event.latLng);
-                var longitude = document.getElementById("Longitude");
+                document.getElementById("<%= longitude.ClientID %>").value = event.latLng.lat();
+                document.getElementById("<%= latitude.ClientID %>").value = event.latLng.lng();
             });
 
             if (navigator.geolocation) {
@@ -98,6 +99,12 @@
     </div>
     
     <div id="map-canvas"></div>
+    <div id="formFromPoint">
+        <asp:Label runat="server" ID="DescriptionLabel" />
+        <asp:TextBox runat="server" ID="DescriptionText" />
+    </div>
+    <asp:HiddenField runat="server" ID="longitude" />
+    <asp:HiddenField runat="server" ID="latitude" />
 </asp:Content>
 
 
