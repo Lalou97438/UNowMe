@@ -14,7 +14,8 @@
     </asp:PlaceHolder>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTbOfdJhwt7pzxQ7eQcdlA75YN7uHgRDI">
+    </script>
 </head>
 <body>
     <form runat="server">

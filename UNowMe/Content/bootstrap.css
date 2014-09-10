@@ -6791,6 +6791,21 @@ th.visible-print,
 td.visible-print {
   display: none !important;
 }
+#map-canvas {
+    height: 400px;
+    width: 100%;
+    margin-top: 10px;
+}
+#panel {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+}
 
 @media print {
   .visible-print {
