@@ -29,9 +29,9 @@ namespace UNowMe
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "285828591622683",
+               appSecret: "1446cb5912c47bf7036be88848d137e5");
 
             //app.UseGoogleAuthentication();
         }

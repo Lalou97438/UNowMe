@@ -1,6 +1,45 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="UNowMe._Default" %>
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <script type="text/javascript">
+
+        function setText(val, e) {
+            document.getElementById(e).value = val;
+        }
+
+        function insertText(val, e) {
+            document.getElementById(e).value += val;
+        }
+
+        var nav = null;
+
+        function requestPosition() {
+            if (nav == null) {
+                nav = window.navigator;
+            }
+            if (nav != null) {
+                var geoloc = nav.geolocation;
+                if (geoloc != null) {
+                    geoloc.getCurrentPosition(successCallback);
+                }
+                else {
+                    alert("geolocation not supported");
+                }
+            }
+            else {
+                alert("Navigator not found");
+            }
+        }
+
+
+
+        function successCallback(position) {
+            setText(position.coords.latitude, "latitude");
+            setText(position.coords.longitude, "longitude");
+        }
+
+
+
+</script>
 
     <div class="jumbotron">
         <h1>ASP.NET</h1>
@@ -38,5 +77,13 @@
             </p>
         </div>
     </div>
+    <div>
+        <label for="latitude">Latitude: </label><input id="latitude" /> <br />
+        <label for="longitude">Longitude: </label><input id="longitude" /> <br />
+        <input type="button" onclick="requestPosition()" value="Get Latitude and Longitude"  /> 
+    </div>
 
 </asp:Content>
+
+    
+
