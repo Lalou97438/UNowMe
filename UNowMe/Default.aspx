@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="UNowMe._Default" %>
 
+<%@Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit"%>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script src="/Scripts/jquery.bpopup.min.js"></script>
     <script type="text/javascript">
@@ -19,7 +21,7 @@
                 addMarker(event.latLng);
                 document.getElementById("<%= longitude.ClientID %>").value = event.latLng.lat();
                 document.getElementById("<%= latitude.ClientID %>").value = event.latLng.lng();
-                $("#popup").bPopup();
+                $find("ModalPopupExtender").show();
             });
 
             if (navigator.geolocation) {
@@ -92,10 +94,17 @@
             markers = [];
         }
 
+        function btnCancel_Click(sender, args) {
+            clearMarkers();
+            $find("ModalPopupExtender").hide();
+            return false;
+        }
+
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+    <script type="text/javascript" src="Default.js"></script>
     <style type="text/css">
-        #popup, .bMulti {
+        .popup {
             background-color: #FFF;
             border-radius: 10px 10px 10px 10px;
             box-shadow: 0 0 25px 5px #999;
@@ -103,28 +112,6 @@
             min-width: 450px;
             min-height: 250px;
             padding: 25px;
-        }
-
-        .button.b-close, .button.bClose {
-            border-radius: 7px 7px 7px 7px;
-            box-shadow: none;
-            font: bold 131% sans-serif;
-            padding: 0 6px 2px;
-            position: absolute;
-            right: -7px;
-            top: -7px;
-        }
-
-        .button {
-            background-color: #2B91AF;
-            border-radius: 10px;
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-            color: #FFF;
-            cursor: pointer;
-            display: inline-block;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
         }
     </style>
     <div id="panel">
@@ -134,14 +121,16 @@
     </div>
 
     <div id="map-canvas"></div>
-    <div id="popup" style="display: none;">
-        <span class="button b-close"><span>X</span></span>
+    <asp:Panel ID="popup" CssClass="popup" Style="display: none" runat="server">
         <asp:Label runat="server" AssociatedControlID="Description">Description </asp:Label>
-        <asp:TextBox runat="server" ID="Description" TextMode="MultiLine" Rows="7" Columns="50"/>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="Description"
-            ErrorMessage="Le champ nom Description est requis." />
-        <asp:Button runat="server" ID="OkButton" Text="OK" />
-    </div>
+        <asp:TextBox runat="server" ID="Description" TextMode="MultiLine" Rows="7" Columns="50" />
+        <asp:Button runat="server" id="btnOkay" Text="OK" CssClass="btn btn-default" OnClick="btnOkay_Click"/>
+        <asp:Button runat="server" id="btnCancel" Text="Annuler" CssClass="btn btn-default" OnClientClick="return btnCancel_Click()"/>
+    </asp:Panel>
+    <asp:Button runat="server" ID="HdnButton" Style="display: none"/>
+    <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" BehaviorID="ModalPopupExtender" runat="server"
+        TargetControlID="HdnButton"
+        PopupControlID="popup"/>
     <asp:HiddenField runat="server" ID="longitude" />
     <asp:HiddenField runat="server" ID="latitude" />
 </asp:Content>

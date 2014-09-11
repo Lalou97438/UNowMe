@@ -13,5 +13,12 @@ namespace UNowMe
         {
 
         }
+
+        protected void btnOkay_Click(object sender, EventArgs e)
+        {
+            var desc = Description.Text;
+            var longi = longitude.Value;
+            var lati = latitude.Value;
+        }
     }
 }
