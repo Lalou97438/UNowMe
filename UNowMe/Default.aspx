@@ -1,9 +1,9 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="UNowMe._Default" %>
 
-<%@Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit"%>
+<%--<%@Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit"%>--%>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <script src="/Scripts/jquery.bpopup.min.js"></script>
+    <%--<script src="/Scripts/jquery.bpopup.min.js"></script>--%>
     <script type="text/javascript">
         var map;
         var markers = [];
@@ -21,7 +21,7 @@
                 addMarker(event.latLng);
                 document.getElementById("<%= longitude.ClientID %>").value = event.latLng.lat();
                 document.getElementById("<%= latitude.ClientID %>").value = event.latLng.lng();
-                $find("ModalPopupExtender").show();
+                //$find("ModalPopupExtender").show();
             });
 
             if (navigator.geolocation) {
@@ -100,6 +100,32 @@
             return false;
         }
 
+        function VerifAllData() {
+            debugger; 
+            var longitude = document.getElementById("<%= longitude.ClientID %>").value; 
+            var latitude = document.getElementById("<%= latitude.ClientID %>").value; 
+            if (longitude != null && latitude != null) {
+                var period = document.getElementById("When").value; 
+                if(period != null){
+                    document.getElementById("Where").hidden = true; 
+                    document.getElementById("When").hidden = true; 
+                    document.getElementById("Who").hidden = false; 
+                    document.getElementById("SaveButton").hidden = false;
+                    document.getElementById("VerifyDataButton").hidden = true;
+                    
+                }
+                else {
+                    document.getElementById("Where").hidden = true;
+                    document.getElementById("When").hidden = false;
+                    document.getElementById("Who").hidden = true; 
+                    document.getElementById("VerifyDataButton").hidden = false;
+                    document.getElementById("SaveButton").hidden = true;
+
+
+                }
+            }
+        }
+
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script type="text/javascript" src="Default.js"></script>
@@ -120,19 +146,31 @@
         <input onclick="deleteMarkers();" type="button" value="Delete Markers">
     </div>
 
-    <div id="map-canvas"></div>
-    <asp:Panel ID="popup" CssClass="popup" Style="display: none" runat="server">
-        <asp:Label runat="server" AssociatedControlID="Description">Description </asp:Label>
-        <asp:TextBox runat="server" ID="Description" TextMode="MultiLine" Rows="7" Columns="50" />
-        <asp:Button runat="server" id="btnOkay" Text="OK" CssClass="btn btn-default" OnClick="btnOkay_Click"/>
-        <asp:Button runat="server" id="btnCancel" Text="Annuler" CssClass="btn btn-default" OnClientClick="return btnCancel_Click()"/>
-    </asp:Panel>
-    <asp:Button runat="server" ID="HdnButton" Style="display: none"/>
-    <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" BehaviorID="ModalPopupExtender" runat="server"
-        TargetControlID="HdnButton"
-        PopupControlID="popup"/>
-    <asp:HiddenField runat="server" ID="longitude" />
-    <asp:HiddenField runat="server" ID="latitude" />
+    <div id="Where">
+        <div id="map-canvas"></div>
+      <%--  <asp:Panel ID="popup" CssClass="popup" Style="display: none" runat="server">
+            <asp:Label runat="server" AssociatedControlID="Description">Description </asp:Label>
+            <asp:TextBox runat="server" ID="Description" TextMode="MultiLine" Rows="7" Columns="50" />
+            <asp:Button runat="server" id="btnOkay" Text="OK" CssClass="btn btn-default" OnClick="btnOkay_Click"/>
+            <asp:Button runat="server" id="btnCancel" Text="Annuler" CssClass="btn btn-default" OnClientClick="return btnCancel_Click()"/>
+        </asp:Panel>--%>
+       <%-- <asp:Button runat="server" ID="HdnButton" Style="display: none"/>
+        <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" BehaviorID="ModalPopupExtender" runat="server"
+            TargetControlID="HdnButton"
+            PopupControlID="popup"/>--%>
+        <asp:HiddenField runat="server" ID="longitude" />
+        <asp:HiddenField runat="server" ID="latitude" />
+    </div>
+
+    <div id="When" hidden="hidden">
+        <input type="date" id="birthday"/>
+
+    </div>
+    <div id="Who" hidden="hidden">
+        <asp:DropDownList runat="server"></asp:DropDownList>
+    </div>
+    <input id="VerifyDataButton" type="button" onclick="VerifAllData();" value="Save"/>
+    <asp:Button runat="server" ID="SaveButton" OnClick="SaveButton_Click" Text="Save"/>
 </asp:Content>
 
 

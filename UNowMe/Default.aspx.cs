@@ -20,5 +20,10 @@ namespace UNowMe
             var longi = longitude.Value;
             var lati = latitude.Value;
         }
+
+        protected void SaveButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
